@@ -20,7 +20,7 @@ def get_animals():
                 'kingdom_class': animal.kingdom_class,
                 'type_of_food': animal.type_of_food,
             })
-        return jsonify(serialized_animals, 200)
+        return jsonify(serialized_animals),200
     except Exception as e:
         return e, 500
 
