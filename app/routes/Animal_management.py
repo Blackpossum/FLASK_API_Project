@@ -30,16 +30,16 @@ def get_animals():
 def create_newAnimals():
     try:
         data = request.json
-        print(data)
         newAnimals = animals()
-        newAnimals.name = data["name"]
-        newAnimals.animals_species = data["animals_species"]
-        newAnimals.type_of_food = data["type_of_food"]
+        newAnimals.name = data['name']
+        newAnimals.latin_name = data['latin_name']
+        newAnimals.kingdom_class = data['kingdom_class']
+        newAnimals.type_of_food = data['type_of_food']
         db.session.add(newAnimals)
         db.session.commit()
         return 'New Animal have been added',200
     except Exception as e:
-        return e, 500
+        return str(e), 500
 
 # @animals_Blueprint.route("/<int:zoo_id>", methods=["PUT"])
 # def update_Animal(Animal_id):
