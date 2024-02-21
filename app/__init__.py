@@ -1,5 +1,5 @@
 from flask import Flask
-from app.routes import Animal_management,Employe_management
+from app.routes import Animal_management,Employe_management,Feeding_management
 import os
 from app.utils.database import db
 
@@ -21,4 +21,5 @@ def home():
     return "Welcome to the Zoo API!"
 
 app.register_blueprint(Animal_management.animals_Blueprint, url_prefix = "/Animal")
-app.register_blueprint(Employe_management.Employe_blueprint, url_prefix = "/Employee")
+app.register_blueprint(Employe_management.employee_Blueprint, url_prefix = "/Employee")
+app.register_blueprint(Feeding_management.feeding_Blueprint, url_prefix = "/Feedings")

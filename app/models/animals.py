@@ -6,3 +6,6 @@ class animals(db.Model):
     latin_name = db.Column(db.String(100), nullable = False)
     kingdom_class = db.Column(db.String(100),nullable = False)
     type_of_food = db.Column(db.String(100), nullable = False)  
+    
+    # setup relation 
+    feeding_schedules = db.relationship('feeding_schedule', back_populates='animal')
