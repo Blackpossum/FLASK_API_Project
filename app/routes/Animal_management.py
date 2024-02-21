@@ -41,10 +41,34 @@ def create_newAnimals():
     except Exception as e:
         return str(e), 500
 
-# @animals_Blueprint.route("/<int:zoo_id>", methods=["PUT"])
-# def update_Animal(Animal_id):
-#     return str(Animal_id)
+# update animals in the zoo
+@animals_Blueprint.route("/<int:id>", methods=["PUT"])
+def update_animal(id):
+    try:
+        data = request.json
+        animal = animals.query.id.get(id)
+        if animal:
+            animal.name = data.get('name',animal.name)
+            animal.latin_name = data.get('latin_name', animal.latin_name)
+            animal.kingdom_class = data.get('kingdom_class', animal.kingdom_class)
+            animal.type_of_food = data.get('type_of_food', animal.type_of_food)
+            db.session.comit()
+            return 'Animal data update succesfully',200
+        else:
+            return 'designated animal not found',404
+    except Exception as e:
+        return str(e),500
 
-# @animals_Blueprint.route("/<int:Animal_id>", methods=["DELETE"])
-# def delete_Animal(Animal_id):
-#     return str(Animal_id)
+# deleted animal in the zoo list 
+@animals_Blueprint.route("/<int:id>", methods=["DELETE"])
+def delete_animal(id):
+    try:
+        animal = animals.query.id.get(id)
+        if animal:
+            db.session.delete(animal)
+            db.session.comit()
+            return 'Animal deleted succesfully',200
+        else:
+            return 'designated animal not found',404
+    except Exception as e:
+        return str(e),500
