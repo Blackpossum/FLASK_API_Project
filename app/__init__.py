@@ -2,7 +2,7 @@ from flask import Flask
 from app.routes import Animal_management,Employe_management,Feeding_management
 import os
 from app.utils.database import db, migrate
-from app.models import animals,employee,feeding
+# from app.models import animals,employee,feeding
 
 app = Flask(__name__)
 
@@ -18,9 +18,9 @@ app.config["SQLALCHEMY_DATABASE_URI"] = f"{DATABASE_TYPE}://{DATABASE_USER}:{DAT
 db.init_app(app)
 migrate.init_app(app, db)
 
-@app.route("/")
-def home():
-    return "Welcome to the Zoo API!"
+# @app.route("/")
+# def home():
+#     return "Welcome to the Zoo API!"
 
 app.register_blueprint(Animal_management.animals_Blueprint, url_prefix = "/Animal")
 app.register_blueprint(Employe_management.employee_Blueprint, url_prefix = "/Employee")

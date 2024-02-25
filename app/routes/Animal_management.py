@@ -22,7 +22,8 @@ def get_animals():
             })
         return jsonify(serialized_animals),200
     except Exception as e:
-        return e, 500
+        return "An error occurred while processing the request", 500
+
 
 
 # create new animal using POST method 
