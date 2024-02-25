@@ -4,8 +4,8 @@ from app.models.animals import animals
 from app.routes.Animal_management import animals_Blueprint
 
 
-def test_get_animals(client):
-    with client.application.app_context():
+def test_get_animals(client_with_animals):
+    with client_with_animals.application.app_context():
         # Adding sample animals to database
         sample_animals = [
             {'name': 'Lion', 'latin_name': 'Panthera leo', 'kingdom_class': 'Mammalia', 'type_of_food': 'Carnivore'},
@@ -17,7 +17,7 @@ def test_get_animals(client):
         db.session.commit()
 
         # Send a GET request 
-        response = client.get('/')
+        response = client_with_animals.get('/')
         assert response.status_code == 200
 
         # Check if the response 
@@ -27,7 +27,7 @@ def test_get_animals(client):
         assert data[1]['name'] == 'Elephant'
 
 @pytest.fixture
-def test_create_animal(client):
+def test_create_animal(client_with_animals):
     # Send a POST request to create a new animal
     new_animal_data = {
         'name': 'Tiger',
@@ -35,7 +35,7 @@ def test_create_animal(client):
         'kingdom_class': 'Mammalia',
         'type_of_food': 'Carnivore'
     }
-    response = client.post('/', json=new_animal_data)
+    response = client_with_animals.post('/', json=new_animal_data)
     assert response.status_code == 200
 
     # Check if new animal was added
@@ -43,10 +43,10 @@ def test_create_animal(client):
     assert created_animal is not None
 
 @pytest.fixture
-def test_update_animal(client):
+def test_update_animal(client_with_animals):
     # add sample animal to database
     sample_animal = animals(name='Lion', latin_name='Panthera leo', kingdom_class='Mammalia', type_of_food='Carnivore')
-    with client.application.app_context():
+    with client_with_animals.application.app_context():
         db.session.add(sample_animal)
         db.session.commit()
 
@@ -56,7 +56,7 @@ def test_update_animal(client):
         'kingdom_class': 'Mammalia',
         'type_of_food': 'Carnivore'
     }
-    response = client.put('/1', json=update_data)
+    response = client_with_animals.put('/1', json=update_data)
     assert response.status_code == 200
 
     updated_animal = animals.query.filter_by(name='Lioness').first()
