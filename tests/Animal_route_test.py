@@ -3,28 +3,6 @@ from app.utils.database import db
 from app.models.animals import animals
 from app.routes.Animal_management import animals_Blueprint
 
-# siapa tau kepake , format salah 
-
-# def test_get_animals(client):
-#     # Add some sample animals to the database
-#     sample_animals = [
-#         {'name': 'Lion', 'latin_name': 'Panthera leo', 'kingdom_class': 'Mammalia', 'type_of_food': 'Carnivore'},
-#         {'name': 'Elephant', 'latin_name': 'Loxodonta africana', 'kingdom_class': 'Mammalia', 'type_of_food': 'Herbivore'}
-#     ]
-#     for animal_data in sample_animals:
-#         animal = animals(**animal_data)
-#         db.session.add(animal)
-#     db.session.commit()
-
-#     # Send a GET request to retrieve animals
-#     response = client.get('/Animal/')
-#     assert response.status_code == 200
-
-#     # Check if the response contains the expected data
-#     data = response.json
-#     assert len(data) == len(sample_animals)
-#     assert data[0]['name'] == 'Lion'
-#     assert data[1]['name'] == 'Elephant'
 
 def test_get_animals(client):
     with client.application.app_context():
