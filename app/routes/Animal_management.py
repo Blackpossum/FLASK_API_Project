@@ -43,33 +43,35 @@ def create_newAnimals():
         return str(e), 500
 
 # update animals in the zoo
-@animals_Blueprint.route("/<int:id>", methods=["PUT"])
-def update_animal(id):
+@animals_Blueprint.route("/animal/<string:name>", methods=["PUT"])
+def update_animal(name):
     try:
         data = request.json
-        animal = animals.query.id.get(id)
+        animal = animals.query.filter_by(name=name).first()  # Filter by name instead of id
         if animal:
-            animal.name = data.get('name',animal.name)
+            animal.name = data.get('name', animal.name)
             animal.latin_name = data.get('latin_name', animal.latin_name)
             animal.kingdom_class = data.get('kingdom_class', animal.kingdom_class)
             animal.type_of_food = data.get('type_of_food', animal.type_of_food)
-            db.session.comit()
-            return 'Animal data update succesfully',200
+            db.session.commit()  # Fix typo: Change comit() to commit()
+            return 'Animal data updated successfully', 200
         else:
-            return 'designated animal not found',404
+            return 'Designated animal not found', 404
     except Exception as e:
-        return str(e),500
+        return str(e), 500
+
 
 # deleted animal in the zoo list 
-@animals_Blueprint.route("/<int:id>", methods=["DELETE"])
-def delete_animal(id):
+@animals_Blueprint.route("/animal/<string:name>", methods=["DELETE"])
+def delete_animal_by_name(name):
     try:
-        animal = animals.query.id.get(id)
+        animal = animals.query.filter_by(name=name).first()
         if animal:
             db.session.delete(animal)
-            db.session.comit()
-            return 'Animal deleted succesfully',200
+            db.session.commit()
+            return 'Animal deleted successfully', 200
         else:
-            return 'designated animal not found',404
+            return 'Designated animal not found', 404
     except Exception as e:
-        return str(e),500
+        return str(e), 500
+
