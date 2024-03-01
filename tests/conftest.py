@@ -9,7 +9,7 @@ from app.routes.Feeding_management import feeding_Blueprint
 @pytest.fixture
 def app_with_animals():
     app = Flask(__name__)
-    app.config['TESTING'] = True
+    app.config['DEBUG'] = True
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///:memory:'
     
     db.init_app(app)
