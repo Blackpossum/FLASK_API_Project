@@ -1,0 +1,6 @@
+rules:
+  # Backend-related labels for Python Flask backend
+  - path: backend/**/*.py
+    labels: [ "backend", "python", "flask" ]
+  - path: backend/**/*.sql
+    labels: [ "backend", "sql" ]
